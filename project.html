@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Marvel App</title>
+    <!-- Bootstrap core CSS -->
+    <link href="template/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="template/css/4-col-portfolio.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript -->
+    <script src="template/vendor/jquery/jquery.min.js"></script>
+    <script src="template/vendor/jquery/jquery.md5.js"></script>
+    <script src="template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+    </script>
+</head>
+<body style="background-image: url('template/images/marvel-superheroes-wallpaper.jpg');">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="http://www.apu.ac.jp/~asifjo16/iti/project/" target="_blank">Marvel App</a>
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+    </nav>
+    <script type="text/javascript">
+        var searchName = $.trim(getUrlParameter('q'));
+    </script>
+    <!-- Page Content -->
+    <div class="container">
+        <!-- Page Heading -->
+        <h1 class="my-4">Marvel API
+            <small>Superheros</small>
+        </h1>
+        <br />
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm" name="search_form" action="">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fas fa-search h4 text-body"></i>
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by name" name="q" value="">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" type="submit">Search</button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
+            </div>
+            <!--end of col-->
+        </div>
+        <br />
+        <div class='row' id="list_container">
+        </div>
+        <script type="text/javascript">
+            $('[name="q"]').val(searchName);
+
+            $publicKey  = "2d8da356f3d6e045b639c6d5773fb76d";
+            $privateKey = "511fb216239c65201db289f5302bd2877f6d2aa6";
+            $ts         = Math.floor(new Date().getTime() / 1000);
+            $hash       = $.md5($ts+$privateKey+$publicKey);
+
+
+            $url = 'https://gateway.marvel.com/v1/public/characters?apikey=2d8da356f3d6e045b639c6d5773fb76d&hash='+$hash+'&ts='+$ts;
+
+            if(searchName != '') {
+                $url += '&nameStartsWith='+encodeURIComponent(searchName);
+            }
+
+            var page_no = $.trim(getUrlParameter('page_no'));
+            if (page_no == ''){
+                page_no = 1;
+            }
+            page_no = parseInt(page_no);
+
+            total_records_per_page = 20;
+            offset = (page_no-1) * total_records_per_page;
+            previous_page = page_no - 1;
+            next_page = page_no + 1;
+            adjacents = "10";
+
+            $url += '&limit='+total_records_per_page+'&offset='+offset;
+
+            $.ajax({
+                url: $url,
+                type: 'GET',
+                beforeSend: function() {
+                    $('#list_container').html('<h1 style="color:#fff;margin:0% 30% 15% 35%;">Loading content...</h1>')
+                },
+                success:function(response) {
+                // characters = $.parseJSON(response);
+                characters = response;
+                if (characters.status == 'Ok' && typeof characters.data != 'undefined') {
+                    data = characters.data;
+                    html = '';
+                    $.each(data.results, function(i, character) {
+                        html += '<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item openBtn" data-id="'+character.id+'"><div class="card h-100"><a href="javascript:void(0)"><img class="card-img-top" src="'+character.thumbnail.path+'/portrait_xlarge.'+character.thumbnail.extension+'" alt=""></a><div class="card-body"><h4 class="card-title"><a href="javascript:void(0)">'+character.name+'</a></h4></div></div></div>';
+                    });
+                    $('#list_container').html(html);
+
+                    total_records = characters.data.total;
+                    total_no_of_pages = Math.ceil(total_records / total_records_per_page);
+                    second_last = total_no_of_pages - 1;
+
+                    var pagination = '<ul class="pagination justify-content-center">';
+                    if (page_no > 1) {
+                        pagination += "<li class='page-item'><a class='page-link' href='?page_no=1'>&lsaquo;&lsaquo; First</a></li>";
+                    }
+                    pagination += '<li ';
+                    if (page_no <= 1){
+                      pagination += 'class="disabled page-item"';  
+                  }
+                  pagination += '>';
+
+                  pagination += '<a class="page-link"';
+                  if (page_no > 1){
+                    pagination += 'href="?page_no='+previous_page+'"';
+                }
+                pagination += '>Previous</a>';
+                pagination += '</li>';
+
+                pagination += '<li ';
+                if (page_no >= total_no_of_pages){
+                    pagination += "class='disabled page-item'";
+                }
+                pagination += '>';
+
+                pagination += '<a class="page-link" ';
+                if(page_no < total_no_of_pages){
+                 pagination += 'href="?page_no='+next_page+'"'; 
+             }
+             pagination += '>Next</a>';
+             pagination += '</li>';
+
+             if(page_no < total_no_of_pages) {
+                pagination += "<li class='page-item'><a class='page-link' href='?page_no="+total_no_of_pages+"'>Last &rsaquo;&rsaquo;</a></li>";
+            }
+
+            $(pagination).insertAfter('#list_container');
+
+            if(searchName != '') {
+                $('.pagination').find('a').each(function() {
+                    var href = $(this).attr('href');
+                    $(this).attr('href', href+'&q='+searchName);
+                })
+            }
+
+            $('.openBtn').on('click',function(){
+                $('#myModal').modal({show:true});
+                $publicKey  = "2d8da356f3d6e045b639c6d5773fb76d";
+                $privateKey = "511fb216239c65201db289f5302bd2877f6d2aa6";
+                $ts         = Math.floor(new Date().getTime() / 1000);
+                $hash       = $.md5($ts+$privateKey+$publicKey);
+                id          = $(this).data('id');
+
+                $url = 'https://gateway.marvel.com/v1/public/characters/'+id+'?apikey=2d8da356f3d6e045b639c6d5773fb76d&hash='+$hash+'&ts='+$ts;
+
+                $.ajax({
+                    url: $url,
+                    type: 'GET',
+                    async: false,
+                    beforeSend: function() {
+                        // $('#list_container').html('<h1 style="color:#fff;margin:0% 30% 15% 35%;">Loading content...</h1>')
+                    },
+                    success:function(response) {
+                        // characters = $.parseJSON(response);
+                        characters = response;
+                        if (characters.status == 'Ok' && typeof characters.data != 'undefined') {
+                            character = characters.data.results[0];
+                            html = '';
+                            html += '<center>';
+                            html += '<img src="'+character.thumbnail.path+'/landscape_incredible.'+character.thumbnail.extension+'" name="aboutme" border="0" class="img-circle"></a>';
+                            html += '<h3 class="media-heading">'+character.name+'</h3>';
+                            html += '<span class="btn btn-warning">COMICS: '+character.comics.available+'</span> ';
+                            html += '<span class="btn btn-info">EVENTS: '+character.events.available+'</span> ';
+                            html += '<span class="btn btn-info">STORIES: '+character.stories.available+'</span> ';
+                            html += '<span class="btn btn-success">SERIES: '+character.series.available+'</span> ';
+                            html += '</center><hr><center><p class="text-left"><strong>Description: </strong><br>';
+                            html += character.description;
+                            html += '</p><br></center>';
+                        }
+                        else {
+                            html = "Details Not found";
+                        }
+
+                        $('.modal-body').html(html);
+                    }
+                })
+                // $('.modal-body').load('details.html?id='+$(this).data('id'), function(){
+                //     $('#myModal').modal({show:true});
+                // });
+            });
+
+            $(document.body).on('hidden.bs.modal', '#myModal', function (event) {
+                $(this).find('.modal-body').removeData('bs.modal');
+                $(this).find('.modal-body').html('Loading. Please wait...');
+            });
+        }
+    }
+})
+</script>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="display: block;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">More Details</h4>
+            </div>
+            <div class="modal-body">
+                Loading. Please wait...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+<!-- Footer -->
+<footer class="py-5 bg-dark" style="">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Marvel App 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    })
+</script>
+</body>
+</html>

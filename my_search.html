@@ -1,0 +1,25 @@
+<!DOCTYPE html >
+<html>
+<head>
+      <meta http-equiv="content-Type" content="text/html ; charset=utf-8" />
+      <title>Exrcise</title>
+      <script type="text/javascript">
+      
+      function showGoogle(url){
+        window.location = url + "?q=" +document.fml.keywd.value
+        }
+
+      </script>
+</head>
+<body>
+      <h1>My Search Page </h1>
+      <form name="fml">
+          key word: <input type="text" name="keywd" > <br/> <br/>
+          <input type="button"
+             onclick="showGoogle('http://www.google.com/search')"
+             value="SEARCH"></br>
+          <h2>An Example Of Google Search Page </h2>
+          <p>Written By 12416152 Asif Siddique </p>
+      </form>
+</body>
+</html>

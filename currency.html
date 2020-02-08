@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> 12416152 JOY Asif Siddique </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type ="text/javascript">
+      $(document).ready(function() {
+        $.ajax({
+          url : "http://data.fixer.io/api/latest?access_key=2ef482ed97e64489005428da3af9931e&symbols=USD,JPY,GBP,CNY,KRW&format=1"
+        }).then(function(data) {
+          alert(data.url);
+
+          $('.date').append(data.date);
+          $('.base').append(data.base);
+          $('.my_usd').append(data.rates.USD);
+          $('.my_jpy').append(data.rates.JPY);
+          $('.my_gbp').append(data.rates.GBP);
+          $('.my_cny').append(data.rates.CNY);
+          $('.my_krw').append(data.rates.KRW);
+
+
+        });
+      });
+      </script>
+  </head>
+
+  <body>
+
+    <h2>CurrencyExchange Page </h2>
+    <div>
+      <p class="date"><b>Current date: </b></p>
+      <p class="base"><b>Base Currency: </b></p>
+    </div>
+
+    <h2>Currency Exchange </h2>
+    <div>
+    <p>1 Euro = <span class="my_usd"></span>USD </p>
+    <p>1 Euro = <span class="my_jpy"></span>JPY </p>
+    <p>1 Euro = <span class="my_gbp"></span>GBP</p>
+    <p>1 Euro = <span class="my_cny"></span>CNY </p>
+    <p>1 Euro = <span class="my_krw"></span>KRW </p>
+  </div>
+
+
+  </body>
+</html>
+
+<style>
+body {
+  background-color: lightblue;
+}
+
+h2 {
+  color: black;
+  font-family: verdana;
+  font-size: 300%;
+}
+
+p {
+  color: red;
+  font-family: courier;
+  font-size: 160%;
+}
+</style>

@@ -1,0 +1,121 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta charset="utf-8">
+<form id="list">
+<div id="title"></div>
+<h1  id="title">News Service </h1>
+<div id="author"></div>
+<div id="urlToImage"></div>
+<div id="url"></div>
+<div id="publishedAt"></div>
+<div id="description"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script type="text/javascript">
+	$(document).ready(function() {
+		$.ajax({
+		url:"https://newsapi.org/v1/articles?source=cnn&sortBy=top&apiKey=d1e1facd4c894b70bf2ac59c2b09bbfe"
+		}).then(function(data){
+		for (i=0; i < data.articles.length; i++)
+		{
+
+			var var_title=data.articles[i].title;
+			var var_author=data.articles[i].author;
+			var var_urltoimage=data.articles[i].urlToImage;
+			var var_url=data.articles[i].url;
+			var var_publishedAt=data.articles[i].publishedAt
+			var var_description=data.articles[i].description
+
+				var start_wrapper ='<div id="wrapper">';
+
+				var prn_title ='<div class="my_title">';
+					prn_title =prn_title + var_title;
+					prn_title =prn_title+'</div>';
+
+
+				var prn_author ='<div class="my_left_text">';
+					prn_author =prn_author+ var_author;
+					prn_author =prn_author+'</div>';
+
+				var prn_image ='<div class="my_image">';
+					prn_image =prn_image+'<a target="_blank" href="'+var_url+'"><img src="'+var_urltoimage+'" style="width:250px"/></a>';
+					prn_image =prn_image+'</div>';
+
+				var prn_content ='<div class="my_content">';
+					prn_content =prn_content + var_description;
+					prn_content =prn_content +'</div>';
+
+
+				var prn_url ='<div class="my_left_text">';
+					prn_url =prn_url+var_url;
+					prn_url =prn_url +'</div>';
+
+				var prn_date ='<div class="my_left_text">';
+					prn_date =prn_date+var_publishedAt;
+					prn_date =prn_date+'</div>';
+
+				var end_wrapperper='</div>';
+
+		$('#list').append(start_wrapper+prn_title+prn_author+prn_image+prn_content+prn_url+prn_date+end_wrapperper);
+
+
+			}
+			});
+			});
+
+		</script>
+</head>
+
+<body>
+
+</body>
+<style>
+
+
+#list {
+    background-color: #ccc;
+    padding: 40px;
+    color: black;
+}
+.my_title {
+  
+  color: black;
+  margin: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 40px;
+} 
+
+.my_left_text {
+  background-color: lightblue;
+  color: black;
+  margin: 20px;
+  padding: 20px;
+}
+.my_image {
+  background-color: lightblue;
+  color: black;
+  margin: 20px;
+  padding: 20px;
+} 
+
+.my_content {
+  background-color: lightblue;
+  color: black;
+  margin: 20px;
+  padding: 20px;
+} 
+.my_left_text{
+  background-color: lightblue;
+  color: black;
+  margin: 20px;
+  padding: 20px;
+} 
+h1 {
+  font-size: 60px;
+}
+
+
+</style>
+</html>

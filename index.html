@@ -1,0 +1,234 @@
+<section id="screen1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<body>
+<div class="navbar">
+     <a href="#home">Home</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/About/About.html">About</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/google_maps.html">Google Maps</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/search/my_search.html">Search</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/miss_apu/miss_apu.html">Miss APU Application </a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/nasa_api/nasa_api.html ">APOD Service</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/waterfalls/waterfalls.html ">Best Waterfalls</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/currency/currency.html ">Exchange Rates</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/news/news.html ">News</a>
+     <a href="http://www.apu.ac.jp/~asifjo16/iti/project/marvel/project.html">Marvel </a>
+
+  <div class="dropdown">
+    <button class="dropbtn">Website
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div>
+</div>
+<p>    Welcome to SIDDIQUE's hub </p>
+<p>     Scroll Down
+</p>
+
+</section>
+
+
+<section id="screen2">
+   <p>  Welcome to SIDDIQUE's hub 
+        I'm not clothes but I cover your body;<br />
+        The more I'm used, the thinner I grow.<br />
+        What am I? </p>
+
+</section>
+
+<section id="screen3">
+     <p> Some people never go crazy. What truly horrible lives they must lead - Charles Bukowski</p>
+
+</section>
+
+<style>
+
+* {margin: 0; padding: 0;}
+
+a {text-decoration: none;}
+
+/* This class is added on scroll */
+.fixed {
+	position: fixed;
+	top: 0;
+	height: 70px;
+	z-index: 1;
+}
+
+body {
+	color: #fff;
+	font-family: 'open-sans-bold', AvenirNext-Medium, sans-serif;
+	font-size: 18px;
+	text-align: center;
+}
+/*Search Box*/
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+/* Navigation Settings */
+nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 70px;
+	background: #fff;
+}
+
+nav li {
+	display: inline-block;
+	padding: 24px 10px;
+}
+
+nav li a {
+	color: #757575;
+	text-transform: uppercase;
+}
+
+section {
+	height: 100vh;
+}
+
+/* Screens Settings */
+#screen1 {
+	background: Tomato;
+}
+
+#screen1 p {
+	padding-top: 200px;
+}
+
+#screen2 {
+	background: #efc94d;
+}
+p {
+	padding-top: 300px;
+    color:  white;
+
+    }
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+}
+#screen3 {
+	background: #43b29d;
+}
+
+
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+
+@media only screen and (max-width: 520px) {
+
+	nav li {
+		padding: 24px 4px;
+	}
+
+	nav li a {
+		font-size: 14px;
+	}
+
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+</style>
